@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Step3D — Annotation de la marche</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Colonne de gauche : sujets / visites / essais -->
+<aside id="sidebar">
+  <div class="logo"><span class="logo-badge">S</span> Step3D</div>
+  <div class="section-label">Sujets</div>
+  <nav id="arbo"></nav>
+  <button id="btn-nouveau-sujet" class="btn btn-wide">+ Nouveau sujet</button>
+
+  <div class="panel" id="panel-params">
+    <div class="panel-title">Paramètres de l'essai</div>
+    <div class="param"><span>Cadence</span><b id="p-cadence">—</b></div>
+    <div class="param"><span>Appui G</span><b id="p-appui-g">—</b></div>
+    <div class="param"><span>Appui D</span><b id="p-appui-d">—</b></div>
+  </div>
+</aside>
+
+<!-- Colonne du milieu : vue 3D + lecteur -->
+<main id="main">
+  <header id="topbar">
+    <div>
+      <h1 id="titre">Step3D</h1>
+      <div id="sous-titre" class="muted">Chargement…</div>
+    </div>
+    <div class="topbar-actions">
+      <button id="btn-export" class="btn btn-secondary">⬇ Export Excel</button>
+      <button id="btn-enregistrer" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </header>
+
+  <div id="viewport">
+    <div id="infos">
+      <div id="infos-ligne">—</div>
+      <div class="pied-ligne">Pied gauche : <b id="etat-g">—</b></div>
+      <div class="pied-ligne">Pied droit&nbsp;&nbsp;: <b id="etat-d">—</b></div>
+    </div>
+    <div id="legende">
+      <span class="chip"><i class="dot dot-g"></i>Gauche</span>
+      <span class="chip"><i class="dot dot-d"></i>Droit</span>
+      <span class="chip"><i class="dot dot-b"></i>Bassin</span>
+    </div>
+    <div id="chargement" class="hidden">Chargement de l'essai…</div>
+  </div>
+
+  <div id="lecteur">
+    <div id="transport">
+      <button id="t-debut" class="tbtn" title="Première image">⏮</button>
+      <button id="t-reculer" class="tbtn" title="Reculer d'une image">−1</button>
+      <button id="t-play" class="tbtn tbtn-play" title="Lecture / pause (Espace)">▶</button>
+      <button id="t-avancer" class="tbtn" title="Avancer d'une image">+1</button>
+      <button id="t-fin" class="tbtn" title="Dernière image">⏭</button>
+      <span id="temps">00:00.00</span>
+      <span class="flex-spacer"></span>
+      <div id="vitesses">
+        <button class="sbtn" data-v="0.25">¼×</button>
+        <button class="sbtn" data-v="0.5">½×</button>
+        <button class="sbtn active" data-v="1">1×</button>
+        <button class="sbtn" data-v="2">2×</button>
+      </div>
+    </div>
+    <div id="appuis">
+      <div class="appui-row">
+        <span class="appui-label lbl-g">G</span>
+        <div class="appui-bar" id="barre-g"></div>
+      </div>
+      <div class="appui-row">
+        <span class="appui-label lbl-d">D</span>
+        <div class="appui-bar" id="barre-d"></div>
+      </div>
+      <div id="curseur"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Colonne de droite : événements -->
+<aside id="rpanel">
+  <div class="panel-head"><span class="panel-title2">Événements</span><span id="nb-events" class="count">0</span></div>
+  <div id="btns-events">
+    <button class="btn evt-btn" data-pied="G" data-type="pose">▼ Pose G</button>
+    <button class="btn evt-btn" data-pied="G" data-type="lever">▲ Lever G</button>
+    <button class="btn evt-btn" data-pied="D" data-type="pose">▼ Pose D</button>
+    <button class="btn evt-btn" data-pied="D" data-type="lever">▲ Lever D</button>
+  </div>
+  <div id="liste-events"></div>
+
+  <div class="panel" id="panel-raccourcis">
+    <div class="panel-title">Raccourcis</div>
+    <div class="rac"><kbd>Espace</kbd><span>lecture / pause</span></div>
+    <div class="rac"><kbd>← →</kbd><span>image précédente / suivante</span></div>
+    <div class="rac"><kbd>Z Q S D</kbd><span>déplacer la vue 3D</span></div>
+    <div class="rac"><kbd>glisser</kbd><span>pivoter la vue</span></div>
+    <div class="rac"><kbd>molette</kbd><span>zoomer</span></div>
+    <div class="rac"><kbd>F</kbd><span>pose gauche</span></div>
+    <div class="rac"><kbd>G</kbd><span>lever gauche</span></div>
+    <div class="rac"><kbd>C</kbd><span>pose droite</span></div>
+    <div class="rac"><kbd>B</kbd><span>lever droite</span></div>
+    <div class="rac"><kbd>Ctrl Z</kbd><span>annuler le dernier posement</span></div>
+  </div>
+</aside>
+
+<div id="toast" class="hidden"></div>
+
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
